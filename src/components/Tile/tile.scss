@@ -1,0 +1,18 @@
+.cell {
+  width: 100px;
+  height: 100px;
+
+  background-color: grey;
+  border-radius: 5px;
+
+  font-size: 3rem;
+  color: #FFF;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.empty {
+    background-color: ghostwhite;
+  }
+}
