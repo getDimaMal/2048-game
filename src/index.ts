@@ -1,5 +1,9 @@
+import './styles/main.scss';
+import Grid from './components/Grid';
+
 document.addEventListener('DOMContentLoaded', () => {
     const root = document.getElementById('root');
+    const grid = new Grid();
 
-    root.innerHTML = `<h1>Hello 2048 Game!</h1>`
-})
+    root.append(grid.render());
+});
