@@ -38,6 +38,7 @@ export class GameModel {
 
     moveUp = () => {
         console.log('Move UP');
+        this.startGame();
     };
 
     moveDown = () => {

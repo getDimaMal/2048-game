@@ -1,27 +1,29 @@
 import './tile.scss';
 
 interface CellProps {
-    value: number;
+  value: number;
 }
 
 export class Tile {
-    private readonly cell: HTMLDivElement;
+  private readonly cell: HTMLDivElement;
 
-    constructor(private props: CellProps) {
-        const { value } = this.props;
+  constructor(private props: CellProps) {
+    this.cell = document.createElement('div');
 
-        this.cell = document.createElement('div');
-        this.cell.innerText = String(value || '');
+    this.setValue();
+    this.setClasses();
+  }
 
-        this.setClasses();
-    }
+  private setValue() {
+    this.cell.innerText = String(this.props.value || '');
+  }
 
-    private setClasses() {
-        this.cell.classList.add('cell');
-        if (this.props.value === 0) this.cell.classList.add('empty');
-    }
+  private setClasses() {
+    this.cell.classList.add('cell');
+    if (this.props.value === 0) this.cell.classList.add('empty');
+  }
 
-    render() {
-        return this.cell;
-    }
+  render() {
+    return this.cell;
+  }
 }
