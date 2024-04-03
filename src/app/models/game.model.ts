@@ -1,55 +1,87 @@
 export class GameModel {
-    private grid: number[][];
+  private grid: number[][];
 
-    constructor() {
-        this.startGame();
+  constructor() {
+    this.startGame();
+  }
+
+  private getEmptyTiles() {
+    const emptyTiles: [number, number][] = [];
+
+    this.grid.forEach((row, rowIndex) => {
+      row.forEach((tile, collIndex) => {
+        if (!tile) {
+          emptyTiles.push([rowIndex, collIndex]);
+        }
+      });
+    });
+
+    return emptyTiles;
+  }
+
+  private addRandomTile() {
+    const emptyTiles = this.getEmptyTiles();
+    const [row, coll] = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
+    this.grid[row][coll] = Math.random() < 0.9 ? 2 : 4;
+  }
+
+  private compressRow(row: number[]) {
+    let i = 0;
+    for (let j = 1; j < row.length; j++) {
+      if (!row[j]) continue;
+      if (!row[i]) {
+        [row[i], row[j]] = [row[j], row[i]];
+      }
+      if (row[i] === row[j]) {
+        row[i] += row[j];
+        row[j] = 0;
+      } else {
+        [row[i + 1], row[j]] = [row[j], row[i + 1]];
+      }
+      i++;
     }
 
-    private getEmptyTiles() {
-        const emptyTiles: [number, number][] = [];
+    return row;
+  }
 
-        this.grid.forEach((row, rowIndex) => {
-            row.forEach((tile, collIndex) => {
-                if (!tile) {
-                    emptyTiles.push([rowIndex, collIndex]);
-                }
-            });
-        });
+  private getTransposedArr(arr: number[][]) {
+    return arr[0].map((_, columnIndex) => arr.map(row => row[columnIndex]));
+  }
 
-        return emptyTiles;
-    }
+  startGame = () => {
+    this.grid = Array(4).fill(null).map(() => Array(4).fill(0));
 
-    private addRandomTile() {
-        const emptyTiles = this.getEmptyTiles();
-        const [row, coll] = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
-        this.grid[row][coll] = Math.random() < 0.9 ? 2 : 4;
-    }
+    this.addRandomTile();
+    this.addRandomTile();
+  };
 
-    startGame = () => {
-        this.grid = Array(4).fill(null).map(() => Array(4).fill(0));
+  getGrid = () => {
+    return this.grid;
+  };
 
-        this.addRandomTile();
-        this.addRandomTile();
-    };
+  moveUp = () => {
+    const newGrid = this.getTransposedArr(this.grid).map(this.compressRow);
+    this.grid = this.getTransposedArr(newGrid);
 
-    getGrid = () => {
-        return this.grid;
-    };
+    this.addRandomTile();
+  };
 
-    moveUp = () => {
-        console.log('Move UP');
-        this.startGame();
-    };
+  moveDown = () => {
+    const newGrid = this.getTransposedArr(this.grid).map(row => this.compressRow(row.reverse()).reverse());
+    this.grid = this.getTransposedArr(newGrid);
 
-    moveDown = () => {
-        console.log('Move Down');
-    };
+    this.addRandomTile();
+  };
 
-    moveLeft = () => {
-        console.log('Move Left');
-    };
+  moveLeft = () => {
+    this.grid.map(this.compressRow);
 
-    moveRight = () => {
-        console.log('Move Right');
-    };
+    this.addRandomTile();
+  };
+
+  moveRight = () => {
+    this.grid.map(row => this.compressRow(row.reverse()).reverse());
+
+    this.addRandomTile();
+  };
 }
