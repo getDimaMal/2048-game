@@ -21,27 +21,27 @@ export class GameModel {
 
   private addRandomTile() {
     const emptyTiles = this.getEmptyTiles();
-    const [row, coll] = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
-    this.grid[row][coll] = Math.random() < 0.9 ? 2 : 4;
+
+    if (emptyTiles.length) {
+      const [row, coll] = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
+      this.grid[row][coll] = Math.random() < 0.9 ? 2 : 4;
+    }
   }
 
-  private compressRow(row: number[]) {
-    let i = 0;
-    for (let j = 1; j < row.length; j++) {
-      if (!row[j]) continue;
-      if (!row[i]) {
-        [row[i], row[j]] = [row[j], row[i]];
+  private compressArr(arr: number[]) {
+    let res = arr.filter(value => value);
+
+    for (let i = 0; i < res.length - 1; i++) {
+      if (res[i] === res[i + 1]) {
+        res[i] += res[i + 1];
+        res[i + 1] = 0;
       }
-      if (row[i] === row[j]) {
-        row[i] += row[j];
-        row[j] = 0;
-      } else {
-        [row[i + 1], row[j]] = [row[j], row[i + 1]];
-      }
-      i++;
     }
 
-    return row;
+    res = res.filter(value => value);
+    const zeros = Array(arr.length - res.length).fill(0);
+
+    return [...res, ...zeros];
   }
 
   private getTransposedArr(arr: number[][]) {
@@ -60,27 +60,27 @@ export class GameModel {
   };
 
   moveUp = () => {
-    const newGrid = this.getTransposedArr(this.grid).map(this.compressRow);
+    const newGrid = this.getTransposedArr(this.grid).map(this.compressArr);
     this.grid = this.getTransposedArr(newGrid);
 
     this.addRandomTile();
   };
 
   moveDown = () => {
-    const newGrid = this.getTransposedArr(this.grid).map(row => this.compressRow(row.reverse()).reverse());
+    const newGrid = this.getTransposedArr(this.grid).map(row => this.compressArr(row.reverse()).reverse());
     this.grid = this.getTransposedArr(newGrid);
 
     this.addRandomTile();
   };
 
   moveLeft = () => {
-    this.grid.map(this.compressRow);
+    this.grid = this.grid.map(this.compressArr);
 
     this.addRandomTile();
   };
 
   moveRight = () => {
-    this.grid.map(row => this.compressRow(row.reverse()).reverse());
+    this.grid = this.grid.map(row => this.compressArr(row.reverse()).reverse());
 
     this.addRandomTile();
   };
