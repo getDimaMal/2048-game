@@ -1,0 +1,10 @@
+@mixin simpleSlide($from, $to, $duration) {
+  @keyframes slide {
+    0% { transform: $from; }
+    100% { transform: $to; }
+  }
+
+  animation-name: slide;
+  animation-duration: $duration;
+  animation-fill-mode: forwards;
+}

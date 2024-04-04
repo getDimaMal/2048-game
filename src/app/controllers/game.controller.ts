@@ -8,18 +8,27 @@ export class GameController {
   }
 
   private setKeydownListener() {
-    const actions: Record<string, () => void> = {
+    const actions: Record<string, () => void | Promise<void>> = {
       'ArrowUp': this.game.moveUp,
       'ArrowDown': this.game.moveDown,
-      'ArrowLeft': this.game.moveLeft,
+      'ArrowLeft': this.moveLeft,
       'ArrowRight': this.game.moveRight,
     };
 
-    document.addEventListener('keydown', ({ key }) => {
-      if (key in actions) actions[key]();
+    document.addEventListener('keydown', async ({ key }) => {
+      if (key in actions) await actions[key]();
       this.renderTiles();
     });
   }
+
+  private moveLeft = async () => {
+    const tiles = this.view.getTilesList();
+    const promises = tiles.filter(tile => tile.getValue()).map(tile => tile.slide('horizontal', -1));
+    await Promise.all(promises);
+
+    this.game.moveLeft();
+  };
+
 
   private renderTiles() {
     this.view.renderTiles(this.game.getGrid());

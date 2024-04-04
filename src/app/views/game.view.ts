@@ -19,6 +19,10 @@ export class GameView {
     }
   }
 
+  getTilesList() {
+    return this.tilesList;
+  }
+
   renderTiles(grid: number[][]) {
     this.setTilesList(grid);
 
