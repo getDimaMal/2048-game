@@ -3,19 +3,27 @@ import Tile from '../../components/Tile';
 
 export class GameView {
   private readonly grid: HTMLDivElement;
+  private tilesList: Tile[];
 
   constructor() {
     this.grid = new Grid().render();
   }
 
-  setTiles(grid: number[][]) {
-    this.grid.innerHTML = '';
+  private setTilesList(grid: number[][]) {
+    this.tilesList = [];
 
     for (const row of grid) {
       for (const value of row) {
-        this.grid.append(new Tile({ value }).render());
+        this.tilesList.push(new Tile({ value }));
       }
     }
+  }
+
+  renderTiles(grid: number[][]) {
+    this.setTilesList(grid);
+
+    this.grid.innerHTML = '';
+    this.tilesList.forEach(tile => this.grid.append(tile.render()));
   }
 
   render() {

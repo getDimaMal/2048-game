@@ -5,25 +5,25 @@ interface CellProps {
 }
 
 export class Tile {
-  private readonly cell: HTMLDivElement;
+  private readonly tile: HTMLDivElement;
 
   constructor(private props: CellProps) {
-    this.cell = document.createElement('div');
+    this.tile = document.createElement('div');
 
     this.setValue();
     this.setClasses();
   }
 
   private setValue() {
-    this.cell.innerText = String(this.props.value || '');
+    this.tile.innerText = String(this.props.value || '');
   }
 
   private setClasses() {
-    this.cell.classList.add('cell');
-    if (this.props.value === 0) this.cell.classList.add('empty');
+    this.tile.classList.add('tile');
+    if (this.props.value === 0) this.tile.classList.add('empty');
   }
 
   render() {
-    return this.cell;
+    return this.tile;
   }
 }

@@ -22,7 +22,7 @@ export class GameController {
   }
 
   private renderTiles() {
-    this.view.setTiles(this.game.getGrid());
+    this.view.renderTiles(this.game.getGrid());
   }
 
   render() {
