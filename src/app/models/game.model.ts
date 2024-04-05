@@ -1,87 +1,121 @@
+import { compressArray } from '../../utils/compressArray';
+
 export class GameModel {
-  private grid: number[][];
+    private size = 4;
+    private field: number[] = [];
 
-  constructor() {
-    this.startGame();
-  }
+    constructor() {
+        this.startGame();
+    }
 
-  private getEmptyTiles() {
-    const emptyTiles: [number, number][] = [];
+    private setField() {
+        this.field = Array(this.size ** 2).fill(0);
+    }
 
-    this.grid.forEach((row, rowIndex) => {
-      row.forEach((tile, collIndex) => {
-        if (!tile) {
-          emptyTiles.push([rowIndex, collIndex]);
+    public getField() {
+        return this.field;
+    }
+
+    private updateField(newField: number[]) {
+        this.field = [...newField];
+    }
+
+    private matrixToArray(matrix: number[][]) {
+        return matrix.reduce((res, row) => [...res, ...row], []);
+    }
+
+    private getMatrix() {
+        const matrix = [];
+        for (let i = 0; i < this.field.length; i += this.size) {
+            matrix.push(this.field.slice(i, i + this.size));
         }
-      });
-    });
-
-    return emptyTiles;
-  }
-
-  private addRandomTile() {
-    const emptyTiles = this.getEmptyTiles();
-
-    if (emptyTiles.length) {
-      const [row, coll] = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
-      this.grid[row][coll] = Math.random() < 0.9 ? 2 : 4;
-    }
-  }
-
-  private compressArr(arr: number[]) {
-    let res = arr.filter(value => value);
-
-    for (let i = 0; i < res.length - 1; i++) {
-      if (res[i] === res[i + 1]) {
-        res[i] += res[i + 1];
-        res[i + 1] = 0;
-      }
+        return matrix;
     }
 
-    res = res.filter(value => value);
-    const zeros = Array(arr.length - res.length).fill(0);
+    private transposeMatrix(matrix: number[][]) {
+        return matrix.map((_, colIndex) => matrix.map(row => row[colIndex]));
+    }
 
-    return [...res, ...zeros];
-  }
+    addRandomTile() {
+        const emptyTiles: number[] = [];
+        this.field.forEach((value, index) => !value && emptyTiles.push(index));
 
-  private getTransposedArr(arr: number[][]) {
-    return arr[0].map((_, columnIndex) => arr.map(row => row[columnIndex]));
-  }
+        if (emptyTiles.length) {
+            const index = emptyTiles[Math.floor(Math.random() * emptyTiles.length)];
+            this.field[index] = Math.random() > 0.9 ? 4 : 2;
+        }
+    }
 
-  startGame = () => {
-    this.grid = Array(4).fill(null).map(() => Array(4).fill(0));
+    startGame = () => {
+        this.setField();
+        this.addRandomTile();
+        this.addRandomTile();
+    };
 
-    this.addRandomTile();
-    this.addRandomTile();
-  };
 
-  getGrid = () => {
-    return this.grid;
-  };
+    moveUp = () => {
+        const shiftMatrix = [];
+        const stackMatrix = [];
+        const matrix = this.transposeMatrix(this.getMatrix());
 
-  moveUp = () => {
-    const newGrid = this.getTransposedArr(this.grid).map(this.compressArr);
-    this.grid = this.getTransposedArr(newGrid);
+        matrix.forEach((row) => {
+            const { shift, stack } = compressArray(row);
+            shiftMatrix.push(shift);
+            stackMatrix.push(stack);
+        });
 
-    this.addRandomTile();
-  };
+        const shift = this.matrixToArray(this.transposeMatrix(shiftMatrix));
+        const field = this.matrixToArray(this.transposeMatrix(stackMatrix));
 
-  moveDown = () => {
-    const newGrid = this.getTransposedArr(this.grid).map(row => this.compressArr(row.reverse()).reverse());
-    this.grid = this.getTransposedArr(newGrid);
+        this.updateField(field);
+        return shift.filter(value => value !== null);
+    };
 
-    this.addRandomTile();
-  };
+    moveDown = () => {
+        const shiftMatrix = [];
+        const stackMatrix = [];
+        const matrix = this.transposeMatrix(this.getMatrix());
 
-  moveLeft = () => {
-    this.grid = this.grid.map(this.compressArr);
+        matrix.forEach((row) => {
+            const { shift, stack } = compressArray(row.reverse());
+            shiftMatrix.push(shift.reverse());
+            stackMatrix.push(stack.reverse());
+        });
 
-    this.addRandomTile();
-  };
+        const shift = this.matrixToArray(this.transposeMatrix(shiftMatrix));
+        const field = this.matrixToArray(this.transposeMatrix(stackMatrix));
 
-  moveRight = () => {
-    this.grid = this.grid.map(row => this.compressArr(row.reverse()).reverse());
+        this.updateField(field);
+        return shift.filter(value => value !== null);
+    };
 
-    this.addRandomTile();
-  };
+    moveLeft = () => {
+        const shift = [];
+        const field = [];
+        const matrix = this.getMatrix();
+
+        matrix.forEach((row) => {
+            const { shift: newShift, stack: newField } = compressArray(row);
+            shift.push(...newShift);
+            field.push(...newField);
+        });
+
+        this.updateField(field);
+        return shift.filter(value => value !== null);
+    };
+
+    moveRight = () => {
+        const shift = [];
+        const field = [];
+        const matrix = this.getMatrix();
+
+        matrix.forEach((row) => {
+            const { shift: newShift, stack: newField } = compressArray(row.reverse());
+            shift.push(...newShift.reverse());
+            field.push(...newField.reverse());
+        });
+
+        this.updateField(field);
+        return shift.filter(value => value !== null);
+    };
 }
