@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "module": "ES6",
-    "target": "ES5",
-    "allowJs": true,
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "moduleResolution": "node",
-    "outDir": "./dist"
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["dom", "es2015"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true
   },
-  "include": [
-    "./src/**/*"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts"]
 }
