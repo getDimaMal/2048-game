@@ -1,17 +1,19 @@
 @import "src/styles/variables";
 
 .grid {
-  $size: calc(4 * ($tile-size + $tile-margin * 2));
+  $tile: calc($tile-size + $tile-margin * 2);
+  $size: calc(4 * $tile);
 
   width: $size;
   height: $size;
   box-sizing: unset;
 
-  padding: 0.5rem;
-  border: 1px solid red;
-
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   align-content: flex-start;
+
+  background-image: $empty-tile;
+  background-repeat: space;
+  background-size: $tile;
 }
