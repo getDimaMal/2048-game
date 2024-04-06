@@ -17,7 +17,7 @@ export function compressArray(arr: number[]) {
     }
 
     return {
-        shift,
         stack: [...stack, ...(Array(arr.length - stack.length).fill(0))],
+        shift,
     };
 }

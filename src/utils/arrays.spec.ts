@@ -1,7 +1,7 @@
-import { compressArray } from './compressArray';
+import { compressArray } from "./arrays";
 
-describe('compressArray', () => {
-    it('should compress array', () => {
+describe("arrays", () => {
+    it("compressArray", () => {
         const { shift, stack } = compressArray([0, 2, 2, 0]);
 
         expect(stack).toEqual([4, 0, 0, 0]);

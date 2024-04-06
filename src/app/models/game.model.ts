@@ -1,4 +1,5 @@
-import { compressArray } from '../../utils/compressArray';
+import Utils from "src/utils";
+
 
 export class GameModel {
     private size = 4;
@@ -59,7 +60,7 @@ export class GameModel {
         const matrix = this.transposeMatrix(this.getMatrix());
 
         matrix.forEach((row) => {
-            const { shift, stack } = compressArray(row);
+            const { shift, stack } = Utils.compressArray(row);
             shiftMatrix.push(shift);
             stackMatrix.push(stack);
         });
@@ -77,7 +78,7 @@ export class GameModel {
         const matrix = this.transposeMatrix(this.getMatrix());
 
         matrix.forEach((row) => {
-            const { shift, stack } = compressArray(row.reverse());
+            const { shift, stack } = Utils.compressArray(row.reverse());
             shiftMatrix.push(shift.reverse());
             stackMatrix.push(stack.reverse());
         });
@@ -95,7 +96,7 @@ export class GameModel {
         const matrix = this.getMatrix();
 
         matrix.forEach((row) => {
-            const { shift: newShift, stack: newField } = compressArray(row);
+            const { shift: newShift, stack: newField } = Utils.compressArray(row);
             shift.push(...newShift);
             field.push(...newField);
         });
@@ -110,7 +111,7 @@ export class GameModel {
         const matrix = this.getMatrix();
 
         matrix.forEach((row) => {
-            const { shift: newShift, stack: newField } = compressArray(row.reverse());
+            const { shift: newShift, stack: newField } = Utils.compressArray(row.reverse());
             shift.push(...newShift.reverse());
             field.push(...newField.reverse());
         });
