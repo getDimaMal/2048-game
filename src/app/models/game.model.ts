@@ -13,28 +13,12 @@ export class GameModel {
         this.field = Array(this.size ** 2).fill(0);
     }
 
-    public getField() {
-        return this.field;
-    }
-
     private updateField(newField: number[]) {
         this.field = [...newField];
     }
 
-    private matrixToArray(matrix: number[][]) {
-        return matrix.reduce((res, row) => [...res, ...row], []);
-    }
-
-    private getMatrix() {
-        const matrix = [];
-        for (let i = 0; i < this.field.length; i += this.size) {
-            matrix.push(this.field.slice(i, i + this.size));
-        }
-        return matrix;
-    }
-
-    private transposeMatrix(matrix: number[][]) {
-        return matrix.map((_, colIndex) => matrix.map(row => row[colIndex]));
+    public getField() {
+        return [...this.field];
     }
 
     addRandomTile() {
@@ -57,7 +41,7 @@ export class GameModel {
     moveUp = () => {
         const shiftMatrix = [];
         const stackMatrix = [];
-        const matrix = this.transposeMatrix(this.getMatrix());
+        const matrix = Utils.transposeMatrix(Utils.arrayToMatrix(this.getField(), this.size));
 
         matrix.forEach((row) => {
             const { shift, stack } = Utils.compressArray(row);
@@ -65,8 +49,8 @@ export class GameModel {
             stackMatrix.push(stack);
         });
 
-        const shift = this.matrixToArray(this.transposeMatrix(shiftMatrix));
-        const field = this.matrixToArray(this.transposeMatrix(stackMatrix));
+        const shift = Utils.matrixToArray(Utils.transposeMatrix(shiftMatrix));
+        const field = Utils.matrixToArray(Utils.transposeMatrix(stackMatrix));
 
         this.updateField(field);
         return shift.filter(value => value !== null);
@@ -75,7 +59,7 @@ export class GameModel {
     moveDown = () => {
         const shiftMatrix = [];
         const stackMatrix = [];
-        const matrix = this.transposeMatrix(this.getMatrix());
+        const matrix = Utils.transposeMatrix(Utils.arrayToMatrix(this.getField(), this.size));
 
         matrix.forEach((row) => {
             const { shift, stack } = Utils.compressArray(row.reverse());
@@ -83,8 +67,8 @@ export class GameModel {
             stackMatrix.push(stack.reverse());
         });
 
-        const shift = this.matrixToArray(this.transposeMatrix(shiftMatrix));
-        const field = this.matrixToArray(this.transposeMatrix(stackMatrix));
+        const shift = Utils.matrixToArray(Utils.transposeMatrix(shiftMatrix));
+        const field = Utils.matrixToArray(Utils.transposeMatrix(stackMatrix));
 
         this.updateField(field);
         return shift.filter(value => value !== null);
@@ -93,7 +77,7 @@ export class GameModel {
     moveLeft = () => {
         const shift = [];
         const field = [];
-        const matrix = this.getMatrix();
+        const matrix = Utils.arrayToMatrix(this.getField(), this.size);
 
         matrix.forEach((row) => {
             const { shift: newShift, stack: newField } = Utils.compressArray(row);
@@ -108,7 +92,7 @@ export class GameModel {
     moveRight = () => {
         const shift = [];
         const field = [];
-        const matrix = this.getMatrix();
+        const matrix = Utils.arrayToMatrix(this.getField(), this.size);
 
         matrix.forEach((row) => {
             const { shift: newShift, stack: newField } = Utils.compressArray(row.reverse());
