@@ -1,4 +1,6 @@
 @import "mixins";
+@import "variables";
+@import "functions";
 
 * {
   margin: 0;
@@ -6,14 +8,43 @@
 }
 
 html, body, #root {
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
 
-  font-size: 16px;
+  overflow-x: hidden; // Prevent horizontal scroll
+
   font-family: "Roboto Light", sans-serif;
+}
 
+html, body {
+  @include respond-to("mobile") {
+    font-size: 14px;
+  }
+  @include respond-to("tablet") {
+    font-size: 16px;
+  }
+  @include respond-to("desktop") {
+    font-size: 18px;
+  }
+}
+
+#root {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @include respond-to("mobile") {
+    background-color: $background-color-mobile;
+
+    overflow-y: scroll; // Allow vertical scroll on mobile devices
+    -webkit-overflow-scrolling: touch; // Smooth scrolling on touch devices
+  }
+  @include respond-to("tablet") {
+    background-color: $background-color-tablet;
+  }
+  @include respond-to("desktop") {
+    background-color: $background-color-desktop;
+  }
 }
+

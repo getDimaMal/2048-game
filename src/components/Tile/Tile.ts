@@ -30,12 +30,12 @@ export class Tile {
   async slide(direction: 'horizontal' | 'vertical', shift: number) {
     const time = 100;
     const axis = direction === 'horizontal' ? 'X' : 'Y';
-    const getTranslate = (value: number) => `translate${axis}(${value}px)`;
+    const getTranslate = (value: number) => `translate${axis}(${value}rem)`;
 
     return new Promise((resolve) => {
       this.tile.style.setProperty('--time', `${time}ms`);
       this.tile.style.setProperty('--from', getTranslate(0));
-      this.tile.style.setProperty('--to', getTranslate((100 + 10) * shift));
+      this.tile.style.setProperty('--to', getTranslate((4 + 0.5) * shift));
       this.tile.classList.add('slide');
 
       setTimeout(() => {

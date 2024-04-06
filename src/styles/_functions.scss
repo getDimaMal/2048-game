@@ -1,0 +1,12 @@
+@import "variables";
+
+@function responsive($size) {
+  @if $size == "mobile" {
+    @return "(max-width: " + $breakpoint-mobile + ")";
+  } @else if $size == "tablet" {
+    @return "(min-width: " + ($breakpoint-mobile + 1) + ") and (max-width: " + $breakpoint-tablet + ")";
+  } @else if $size == "desktop" {
+    @return "(min-width: " + ($breakpoint-tablet + 1) + ")";
+  }
+  @return null;
+}

@@ -1,3 +1,11 @@
+@import "functions";
+
+@mixin respond-to($size) {
+  @media #{responsive($size)} {
+    @content;
+  }
+}
+
 @mixin simpleSlide($from, $to, $duration) {
   @keyframes slide {
     0% { transform: $from; }
