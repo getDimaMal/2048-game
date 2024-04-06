@@ -1,61 +1,45 @@
-import { GameModel } from '../models/game.model';
-import { GameView } from '../views/game.view';
+import { GameModel } from "../models/game.model";
+import { GameView } from "../views/game.view";
+
+type ActionType = {
+    action: () => number[],
+    direction: "vertical" | "horizontal",
+    multiplier: -1 | 1
+}
 
 export class GameController {
+    private actions: Record<string, ActionType> = {
+        "ArrowUp": { action: this.game.moveUp, direction: "vertical", multiplier: 1 },
+        "ArrowDown": { action: this.game.moveDown, direction: "vertical", multiplier: -1 },
+        "ArrowLeft": { action: this.game.moveLeft, direction: "horizontal", multiplier: 1 },
+        "ArrowRight": { action: this.game.moveRight, direction: "horizontal", multiplier: -1 },
+    };
+
     constructor(private game: GameModel, private view: GameView) {
         this.setKeydownListener();
         this.view.renderTiles(this.game.getField());
-    }
-
-    private setKeydownListener() {
-        const actions: Record<string, () => Promise<void>> = {
-            'ArrowUp': this.moveUp,
-            'ArrowDown': this.moveDown,
-            'ArrowLeft': this.moveLeft,
-            'ArrowRight': this.moveRight,
-        };
-
-        document.addEventListener('keydown', async ({ key }) => {
-            if (key in actions) {
-                await actions[key]();
-                this.game.addRandomTile();
-                this.view.renderTiles(this.game.getField());
-            }
-        });
     }
 
     private getNotEmptyTiles() {
         return this.view.getTilesList().filter(tile => tile.getValue());
     }
 
-    private moveUp = async () => {
-        const shifts = this.game.moveUp();
-        const tiles = this.getNotEmptyTiles();
-        const promises = tiles.map((tile, index) => tile.slide('vertical', shifts[index]));
-        await Promise.all(promises);
-    };
+    private setKeydownListener() {
+        document.addEventListener("keydown", async ({ key }) => {
+            if (!(key in this.actions)) return;
 
-    private moveDown = async () => {
-        const shifts = this.game.moveDown();
-        const tiles = this.getNotEmptyTiles();
-        const promises = tiles.map((tile, index) => tile.slide('vertical', shifts[index] * -1));
-        await Promise.all(promises);
-    };
+            const { action, direction, multiplier } = this.actions[key];
 
-    private moveLeft = async () => {
-        const shifts = this.game.moveLeft();
-        const tiles = this.getNotEmptyTiles();
-        const promises = tiles.map((tile, index) => tile.slide('horizontal', shifts[index]));
-        await Promise.all(promises);
-    };
+            const shifts = action();
+            const tiles = this.getNotEmptyTiles();
 
-    private moveRight = async () => {
-        const shifts = this.game.moveRight();
-        const tiles = this.getNotEmptyTiles();
-        const promises = tiles.map((tile, index) => tile.slide('horizontal', shifts[index] * -1));
-        await Promise.all(promises);
-    };
+            const promises = tiles.map((tile, index) => tile.slide(direction, shifts[index] * multiplier));
+            await Promise.all(promises);
 
+            if (shifts.filter(val => !!val).length) this.game.addRandomTile();
+            this.view.renderTiles(this.game.getField());
+        });
+    }
 
     render() {
         return this.view.render();
