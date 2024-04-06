@@ -1,51 +1,53 @@
-import './tile.scss';
+import "./tile.scss";
+import { getFullWidth } from "../helpers";
 
 interface CellProps {
-  value: number;
+    value: number;
 }
 
 export class Tile {
-  private readonly tile: HTMLDivElement;
+    private readonly tile: HTMLDivElement;
 
-  constructor(private props: CellProps) {
-    this.tile = document.createElement('div');
+    constructor(private props: CellProps) {
+        this.tile = document.createElement("div");
 
-    this.setValue();
-    this.setClasses();
-  }
+        this.setValue();
+        this.setClasses();
+    }
 
-  private setValue() {
-    this.tile.innerText = String(this.props.value || '');
-  }
+    private setValue() {
+        this.tile.innerText = String(this.props.value || "");
+    }
 
-  private setClasses() {
-    this.tile.classList.add('tile');
-    if (this.props.value === 0) this.tile.classList.add('empty');
-  }
+    private setClasses() {
+        this.tile.classList.add("tile");
+        if (this.props.value === 0) this.tile.classList.add("empty");
+    }
 
-  getValue() {
-    return this.props.value;
-  }
+    getValue() {
+        return this.props.value;
+    }
 
-  async slide(direction: 'horizontal' | 'vertical', shift: number) {
-    const time = 100;
-    const axis = direction === 'horizontal' ? 'X' : 'Y';
-    const getTranslate = (value: number) => `translate${axis}(${value}rem)`;
+    async slide(direction: "horizontal" | "vertical", shift: number) {
+        const time = 128;
+        const width = getFullWidth(this.tile);
+        const axis = direction === "horizontal" ? "X" : "Y";
+        const getTranslate = (value: number) => `translate${axis}(${value}px)`;
 
-    return new Promise((resolve) => {
-      this.tile.style.setProperty('--time', `${time}ms`);
-      this.tile.style.setProperty('--from', getTranslate(0));
-      this.tile.style.setProperty('--to', getTranslate((4 + 0.5) * shift));
-      this.tile.classList.add('slide');
+        return new Promise((resolve) => {
+            this.tile.style.setProperty("--time", `${time}ms`);
+            this.tile.style.setProperty("--from", getTranslate(0));
+            this.tile.style.setProperty("--to", getTranslate(width * shift));
+            this.tile.classList.add("slide");
 
-      setTimeout(() => {
-        this.tile.removeAttribute('stile');
-        resolve(null);
-      }, time);
-    });
-  }
+            setTimeout(() => {
+                this.tile.removeAttribute("stile");
+                resolve(null);
+            }, time);
+        });
+    }
 
-  render() {
-    return this.tile;
-  }
+    render() {
+        return this.tile;
+    }
 }
