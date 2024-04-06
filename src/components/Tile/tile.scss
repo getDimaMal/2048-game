@@ -7,11 +7,7 @@
 
   margin: $tile-margin;
 
-  background-color: grey;
   border-radius: 22%;
-
-  font-size: 2rem;
-  color: #FFFFFF;
 
   display: flex;
   align-items: center;
@@ -20,6 +16,14 @@
 
   &.empty {
     background-color: inherit;
+  }
+
+  @each $tile-name, $values in $tile-styles {
+    &.#{$tile-name} {
+      background-color: nth($values, 1);
+      color: nth($values, 2);
+      font-size: nth($values, 3);
+    }
   }
 
   &.slide {

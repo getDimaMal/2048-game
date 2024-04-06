@@ -20,8 +20,12 @@ export class Tile {
     }
 
     private setClasses() {
+        const { value } = this.props;
+
         this.tile.classList.add("tile");
-        if (this.props.value === 0) this.tile.classList.add("empty");
+
+        if (value) this.tile.classList.add(`tile-${value < 2048 ? value : 2048}`);
+        else this.tile.classList.add("empty");
     }
 
     getValue() {

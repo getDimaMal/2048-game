@@ -2,10 +2,40 @@ $breakpoint-mobile: 480px;
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 1024px;
 
-$background-color-mobile: #F08080;
-$background-color-tablet: #90EE90;
-$background-color-desktop: #ADD8E6;
+$background-color-mobile: #B95D5D;
+$background-color-tablet: #519651;
+$background-color-desktop: #6498A9;
 
-$tile-size: 5rem;
+$empty-tile: url(src/asset/empty-tile.svg);
+
 $tile-margin: 0.25rem;
-$empty-tile: url(src/asset/empty-tile.svg)
+$tile-size: 5rem;
+
+$tile-2: #EEE4DA;
+$tile-4: #EDE0C8;
+$tile-8: #F2B179;
+$tile-16: #F59563;
+$tile-32: #F67C5F;
+$tile-64: #F65E3B;
+$tile-128: #EDCF72;
+$tile-256: #EDCC61;
+$tile-512: #EDC850;
+$tile-1024: #EDC53F;
+$tile-2048: #EDC22E;
+
+$tile-color-dark: #776E65;
+$tile-color-light: #F9F6F2;
+
+$tile-styles: (
+  "tile-2": ($tile-2, $tile-color-dark, 2rem),
+  "tile-4": ($tile-4, $tile-color-dark, 2rem),
+  "tile-8": ($tile-8, $tile-color-light, 2rem),
+  "tile-16": ($tile-16, $tile-color-light, 2rem),
+  "tile-32": ($tile-32, $tile-color-light, 2rem),
+  "tile-64": ($tile-64, $tile-color-light, 2rem),
+  "tile-128": ($tile-128, $tile-color-light, 1.8rem),
+  "tile-256": ($tile-256, $tile-color-light, 1.8rem),
+  "tile-512": ($tile-512, $tile-color-light, 1.8rem),
+  "tile-1024": ($tile-1024, $tile-color-light, 1.6rem),
+  "tile-2048": ($tile-2048, $tile-color-light, 1.6rem)
+);
