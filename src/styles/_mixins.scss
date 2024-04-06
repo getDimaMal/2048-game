@@ -10,9 +10,14 @@
   @keyframes slide {
     0% { transform: $from; }
     100% { transform: $to; }
+
   }
 
-  animation-name: slide;
-  animation-duration: $duration;
-  animation-fill-mode: forwards;
+  will-change: transform;
+  transform: translateZ(0);
+  animation: slide $duration ease forwards;
+  /* Vendor Prefixes for older browsers */
+  -webkit-animation: slide $duration ease forwards;
+  -moz-animation: slide $duration ease forwards;
+  -o-animation: slide $duration ease forwards;
 }

@@ -33,7 +33,7 @@ export class Tile {
     }
 
     async slide(direction: "horizontal" | "vertical", shift: number) {
-        const time = 128;
+        const time = 124;
         const width = getFullWidth(this.tile);
         const axis = direction === "horizontal" ? "X" : "Y";
         const getTranslate = (value: number) => `translate${axis}(${value}px)`;
