@@ -7,7 +7,7 @@ type ActionType = {
     multiplier: -1 | 1
 }
 
-export class GameController {
+class GameController {
     private actions: Record<string, ActionType> = {
         "ArrowUp": { action: this.game.moveUp, direction: "vertical", multiplier: 1 },
         "ArrowDown": { action: this.game.moveDown, direction: "vertical", multiplier: -1 },
@@ -45,3 +45,5 @@ export class GameController {
         return this.view.render();
     }
 }
+
+export default GameController;
