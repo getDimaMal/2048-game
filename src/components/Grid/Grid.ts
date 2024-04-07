@@ -1,6 +1,7 @@
 import "./grid.scss";
 
-export class Grid {
+
+class Grid {
     private readonly grid: HTMLDivElement;
 
     constructor() {
@@ -12,3 +13,5 @@ export class Grid {
         return this.grid;
     }
 }
+
+ export default Grid;

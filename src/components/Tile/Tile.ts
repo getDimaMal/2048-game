@@ -1,11 +1,12 @@
-import "./tile.scss";
 import { getFullWidth } from "../helpers";
+import "./tile.scss";
+
 
 interface CellProps {
     value: number;
 }
 
-export class Tile {
+class Tile {
     private readonly tile: HTMLDivElement;
 
     constructor(private props: CellProps) {
@@ -55,3 +56,5 @@ export class Tile {
         return this.tile;
     }
 }
+
+export default Tile;

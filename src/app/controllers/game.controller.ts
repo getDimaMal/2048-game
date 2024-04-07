@@ -1,5 +1,6 @@
-import { GameModel } from "../models/game.model";
-import { GameView } from "../views/game.view";
+import type GameModel from "../models/game.model";
+import type GameView from "../views/game.view";
+
 
 type ActionType = {
     action: () => number[],

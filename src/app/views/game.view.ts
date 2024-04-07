@@ -1,7 +1,7 @@
-import Grid from '../../components/Grid';
-import Tile from '../../components/Tile';
+import { Grid, Tile } from "src/components";
 
-export class GameView {
+
+class GameView {
     private readonly grid: HTMLDivElement;
     private tilesList: Tile[] = [];
 
@@ -21,7 +21,7 @@ export class GameView {
     renderTiles(field: number[]) {
         this.setTilesList(field);
 
-        this.grid.innerHTML = '';
+        this.grid.innerHTML = "";
         this.tilesList.forEach(tile => this.grid.append(tile.render()));
     }
 
@@ -29,3 +29,5 @@ export class GameView {
         return this.grid;
     }
 }
+
+export default GameView;

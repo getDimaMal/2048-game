@@ -1,6 +1,12 @@
 class SwipeController {
     private startX = 0;
     private startY = 0;
+    private actions = {
+        "ArrowUp": () => document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowUp" })),
+        "ArrowDown": () => document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" })),
+        "ArrowLeft": () => document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowLeft" })),
+        "ArrowRight": () => document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight" })),
+    };
 
     constructor() {
         this.addEventListener();
@@ -22,15 +28,15 @@ class SwipeController {
         const endX = touch.clientX;
         const endY = touch.clientY;
 
-        const deltaX = endX - this.startX;
-        const deltaY = endY - this.startY;
+        const deltaX = Math.abs(endX - this.startX);
+        const deltaY = Math.abs(endY - this.startY);
 
-        if (Math.abs(deltaX) < Math.abs(deltaY)) {
-            if (deltaY < 0) document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowUp" }));
-            else document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+        if (deltaX < deltaY) {
+            if (deltaY < 0) this.actions["ArrowUp"]();
+            else this.actions["ArrowDown"]();
         } else {
-            if (deltaX < 0) document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowLeft" }));
-            else document.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight" }));
+            if (deltaX < 0) this.actions["ArrowLeft"]();
+            else this.actions["ArrowRight"]();
         }
     };
 }

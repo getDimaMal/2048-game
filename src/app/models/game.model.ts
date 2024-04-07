@@ -1,7 +1,7 @@
 import Utils from "src/utils";
 
 
-export class GameModel {
+class GameModel {
     private size = 4;
     private field: number[] = [];
 
@@ -36,7 +36,6 @@ export class GameModel {
         this.addRandomTile();
         this.addRandomTile();
     };
-
 
     moveUp = () => {
         const shiftMatrix = [];
@@ -104,3 +103,5 @@ export class GameModel {
         return shift.filter(value => value !== null);
     };
 }
+
+export default GameModel;
