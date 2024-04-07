@@ -14,4 +14,4 @@ class Grid {
     }
 }
 
- export default Grid;
+export default Grid;

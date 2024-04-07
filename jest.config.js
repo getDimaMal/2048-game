@@ -1,9 +1,12 @@
 module.exports = {
     preset: 'ts-jest',
-    testEnvironment: 'node',
+    testEnvironment: 'jsdom',
+    moduleNameMapper: {
+        '\\.(scss|sass|css)$': 'identity-obj-proxy',
+    },
     collectCoverage: true,
     coverageDirectory: 'coverage',
-    coverageReporters: ['clover'],
+    coverageReporters: ['html'],
     collectCoverageFrom: [
         'src/**/*.{js,jsx,ts,tsx}',
         '!src/**/index.{js,ts}',
