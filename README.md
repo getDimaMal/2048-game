@@ -4,6 +4,21 @@
 
 ## Setting Up
 
-* To install the app use: `yarn install`
-* To run DEV the app use: `yarn run dev`
-* To build the app use: `yarn run build`
+### To `start` project locally
+
+```bash
+    yarn install
+    yarn start
+```
+
+### To `build` project
+
+```bash
+    yarn install
+    yarn build
+```
+
+### Codebase Commands
+
+* `yarn run lint`
+* `yarn run test`
