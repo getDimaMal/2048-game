@@ -1,5 +1,5 @@
-import * as arrays from "./arrays";
-import * as matrices from "./matrices";
+import * as arrays from './arrays';
+import * as matrices from './matrices';
 
 const Utils = { ...arrays, ...matrices };
 

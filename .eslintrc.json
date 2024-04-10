@@ -1,0 +1,48 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "import",
+    "@typescript-eslint"
+  ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
+  "rules": {
+    "prettier/prettier": ["error", {}, {"usePrettierrc": true}],
+    "import/order": [
+      "error", {
+        "groups": [["builtin", "external"], ["internal"], ["parent", "sibling", "index"]],
+        "pathGroups": [
+          {
+            "pattern": "*.css",
+            "group": "index",
+            "position": "after"
+          }
+        ],
+        "newlines-between": "always", // Enforces blank line between groups
+        "alphabetize": {
+          "order": "asc", // Sort in ascending order
+          "caseInsensitive": true  // Ignore case
+        }
+      }
+    ],
+    "import/newline-after-import": [
+      "error", {
+        "count": 1  // Ensures at least one newline after the last import
+      }
+    ],
+    "import/no-duplicates": "error"  // Disallow duplicate imports
+  }
+}
