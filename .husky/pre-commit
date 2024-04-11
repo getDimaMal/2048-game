@@ -1,0 +1,10 @@
+#!/bin/sh
+. "$(dirname "$0")/husky.sh"
+
+yarn lint
+
+git add -A .
+
+yarn type-check
+
+yarn test
