@@ -1,6 +1,5 @@
 import { Grid, Tile } from 'src/components';
 
-
 class GameView {
   private readonly grid: HTMLDivElement;
   private tilesList: Tile[] = [];
@@ -11,7 +10,7 @@ class GameView {
 
   private setTilesList(field: number[]) {
     this.tilesList = [];
-    field.forEach(value => this.tilesList.push(new Tile({ value })));
+    field.forEach((value) => this.tilesList.push(new Tile({ value })));
   }
 
   getTilesList() {
@@ -22,7 +21,7 @@ class GameView {
     this.setTilesList(field);
 
     this.grid.innerHTML = '';
-    this.tilesList.forEach(tile => this.grid.append(tile.render()));
+    this.tilesList.forEach((tile) => this.grid.append(tile.render()));
   }
 
   render() {

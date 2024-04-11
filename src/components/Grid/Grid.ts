@@ -1,6 +1,5 @@
 import './grid.scss';
 
-
 class Grid {
   private readonly grid: HTMLDivElement;
 

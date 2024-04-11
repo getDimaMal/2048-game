@@ -1,19 +1,16 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["import", "@typescript-eslint"],
   "extends": [
-    "plugin:@typescript-eslint/recommended", "plugin:import/warnings", "plugin:import/warnings"
+    "prettier",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:import/warnings",
+    "plugin:import/warnings"
   ],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "settings": {
-    "import/resolver": {
-      "typescript": {}
-    }
-  },
-  "ignorePatterns": [".next/", "node_modules/", "public/", "*.config.[tj]s"],
   "rules": {
     "import/order": [
       "error", {
@@ -26,19 +23,15 @@
           }
         ],
         "newlines-between": "always",
-        // Enforces blank line between groups
         "alphabetize": {
           "order": "asc",
-          // Sort in ascending order
           "caseInsensitive": true
-          // Ignore case
         }
       }
     ],
     "import/newline-after-import": [
       "error", {
-        "count": 2
-        // Ensures at least two newline after the last import
+        "count": 1
       }
     ],
     "import/no-duplicates": "error"
