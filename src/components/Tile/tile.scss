@@ -4,7 +4,6 @@
 .tile {
   width: $tile-size;
   height: $tile-size;
-
   margin: $tile-margin;
 
   border-radius: 22%;
@@ -13,6 +12,10 @@
   align-items: center;
   justify-content: center;
   flex: 0 0 $tile-size;
+
+  background-color: $tile-2048;
+  color: $tile-color-light;
+  font-size: 1.6rem;
 
   &.empty {
     background-color: inherit;
