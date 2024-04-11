@@ -6,7 +6,7 @@ import GameView from './app/views/game.view';
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  const root = document.getElementById('root');
+  const root = document.getElementById('root') as HTMLElement;
 
   new SwipeController();
   const game = new GameController(new GameModel(), new GameView());
