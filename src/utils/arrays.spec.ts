@@ -1,5 +1,6 @@
 import { compressArray } from './arrays';
 
+
 describe('arrays', () => {
   it('compressArray', () => {
     const { shift, stack } = compressArray([0, 2, 2, 0]);

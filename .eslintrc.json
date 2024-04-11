@@ -1,48 +1,38 @@
 {
   "parser": "@typescript-eslint/parser",
+  "plugins": ["import", "@typescript-eslint"],
   "extends": [
     "plugin:@typescript-eslint/recommended",
-    "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:prettier/recommended"
+    "plugin:import/warnings"
   ],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "plugins": [
-    "import",
-    "@typescript-eslint"
-  ],
   "settings": {
     "import/resolver": {
       "typescript": {}
     }
   },
+  "ignorePatterns": [".next/", "node_modules/", "public/", "*.config.[tj]s"],
   "rules": {
-    "prettier/prettier": ["error", {}, {"usePrettierrc": true}],
     "import/order": [
       "error", {
-        "groups": [["builtin", "external"], ["internal"], ["parent", "sibling", "index"]],
-        "pathGroups": [
-          {
-            "pattern": "*.css",
-            "group": "index",
-            "position": "after"
-          }
-        ],
+        "groups": [["external", "builtin"], ["internal"], ["parent"], ["sibling", "index"]],
+        "pathGroups": [{"pattern": "*.scss", "group": "index", "position": "after"}],
         "newlines-between": "always", // Enforces blank line between groups
         "alphabetize": {
           "order": "asc", // Sort in ascending order
-          "caseInsensitive": true  // Ignore case
+          "caseInsensitive": true // Ignore case
         }
       }
     ],
     "import/newline-after-import": [
       "error", {
-        "count": 1  // Ensures at least one newline after the last import
+        "count": 2 // Ensures at least two newline after the last import
       }
     ],
-    "import/no-duplicates": "error"  // Disallow duplicate imports
+    "import/no-duplicates": "error"
   }
 }

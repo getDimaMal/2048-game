@@ -1,6 +1,7 @@
 import { getFullWidth } from '../helpers';
 import './tile.scss';
 
+
 interface CellProps {
   value: number;
 }

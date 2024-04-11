@@ -1,5 +1,6 @@
 import Utils from 'src/utils';
 
+
 class GameModel {
   private size = 4;
   private field: number[] = [];

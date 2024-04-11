@@ -1,5 +1,6 @@
 import { arrayToMatrix, matrixToArray, transposeMatrix } from './matrices';
 
+
 describe('matrices', () => {
   it('arrayToMatrix', () => {
     const size = 3;

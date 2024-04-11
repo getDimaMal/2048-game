@@ -1,5 +1,6 @@
 import { Grid, Tile } from 'src/components';
 
+
 class GameView {
   private readonly grid: HTMLDivElement;
   private tilesList: Tile[] = [];
