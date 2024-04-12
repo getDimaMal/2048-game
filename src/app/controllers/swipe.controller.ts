@@ -25,13 +25,10 @@ class SwipeController {
 
   private handleTouchEnd = (event: TouchEvent) => {
     const touch = event.changedTouches[0];
-    const endX = touch.clientX;
-    const endY = touch.clientY;
+    const deltaX = touch.clientX - this.startX;
+    const deltaY = touch.clientY - this.startY;
 
-    const deltaX = Math.abs(endX - this.startX);
-    const deltaY = Math.abs(endY - this.startY);
-
-    if (deltaX < deltaY) {
+    if (Math.abs(deltaX) < Math.abs(deltaY)) {
       if (deltaY < 0) this.actions['ArrowUp']();
       else this.actions['ArrowDown']();
     } else {

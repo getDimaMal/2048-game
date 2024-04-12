@@ -6,7 +6,7 @@
   }
 }
 
-@mixin simpleSlide($from, $to, $duration) {
+@mixin simple-slide($from, $to, $duration) {
   @keyframes slide {
     0% { transform: $from; }
     100% { transform: $to; }
@@ -20,4 +20,19 @@
   -webkit-animation: slide $duration ease forwards;
   -moz-animation: slide $duration ease forwards;
   -o-animation: slide $duration ease forwards;
+}
+
+@mixin simple-scale($scale, $duration) {
+  @keyframes scale {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale($scale); }
+  }
+
+  will-change: transform;
+  transform: translateZ(0);
+  animation: scale $duration ease-out forwards;
+  /* Vendor Prefixes for older browsers */
+  -webkit-animation: scale $duration ease-out forwards;
+  -moz-animation: scale $duration ease-out forwards;
+  -o-animation: scale $duration ease-out forwards;
 }

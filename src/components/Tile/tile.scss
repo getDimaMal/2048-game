@@ -34,6 +34,11 @@
     --from: 0;
     --to: 0;
 
-    @include simpleSlide(var(--from), var(--to), var(--time))
+    @include simple-slide(var(--from), var(--to), var(--time))
+  }
+
+  &.scale {
+    --time: 250;
+    @include simple-scale(1.1, var(--time))
   }
 }
